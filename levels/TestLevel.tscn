@@ -122,10 +122,10 @@ points = 7
 [node name="HUD" parent="." instance=ExtResource( 11 )]
 
 [node name="MaskedDude" parent="." instance=ExtResource( 3 )]
-position = Vector2( 391, 260 )
+position = Vector2( 423, 261 )
 
 [node name="AnimatedSprite" parent="MaskedDude" index="1"]
-frame = 6
+frame = 3
 
 [connection signal="area_entered" from="Items/Apple" to="Items/Apple" method="_on_Fruit_area_entered"]
 
