@@ -17,7 +17,7 @@ func _ready():
 	if parent is PathFollow2D:
 		saw_points = parent.get_parent().curve.get_baked_points()
 
-func _physics_process(delta):
+func _physics_process(_delta):
 	if parent is PathFollow2D:
 		var target = saw_points[saw_index]
 		if global_position.distance_to(target) < 1:

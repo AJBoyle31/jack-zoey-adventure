@@ -19,7 +19,7 @@ func _ready():
 	global_position = block_position
 	add_chain()
 
-func _physics_process(delta):
+func _physics_process(_delta):
 	rotate(rotating_float)
 	if get_rotation() > rotation_limit or get_rotation() < -rotation_limit:
 		rotating_float *= -1

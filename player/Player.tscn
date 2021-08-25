@@ -6,29 +6,27 @@
 [ext_resource path="res://area detection/HurtBox.tscn" type="PackedScene" id=11]
 
 [sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 7, 12 )
+extents = Vector2( 7, 11 )
 
 [sub_resource type="RectangleShape2D" id=2]
 extents = Vector2( 10, 12 )
 
 [node name="Player" type="KinematicBody2D"]
 collision_layer = 2
-collision_mask = 33
+collision_mask = 97
 script = ExtResource( 8 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource( 1 )
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
-playing = true
-offset = Vector2( 0, -4 )
 script = ExtResource( 9 )
 
 [node name="CharacterMover" parent="." instance=ExtResource( 10 )]
 
 [node name="Camera2D" type="Camera2D" parent="."]
 current = true
-zoom = Vector2( 0.75, 0.75 )
+zoom = Vector2( 0.5, 0.5 )
 smoothing_enabled = true
 
 [node name="HurtBox" parent="." instance=ExtResource( 11 )]
@@ -38,7 +36,10 @@ collision_mask = 8
 [node name="CollisionShape2D" parent="HurtBox" index="0"]
 shape = SubResource( 2 )
 
+[node name="EffectTimer" type="Timer" parent="."]
+
 [connection signal="animation_finished" from="AnimatedSprite" to="." method="_on_AnimatedSprite_animation_finished"]
 [connection signal="area_entered" from="HurtBox" to="." method="_on_HurtBox_area_entered"]
+[connection signal="timeout" from="EffectTimer" to="." method="_on_EffectTimer_timeout"]
 
 [editable path="HurtBox"]
