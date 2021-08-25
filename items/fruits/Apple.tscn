@@ -87,7 +87,6 @@ radius = 5.09902
 [node name="AnimatedSprite" parent="." index="0"]
 frames = SubResource( 18 )
 animation = "play"
-frame = 4
 playing = true
 
 [node name="CollisionShape2D" parent="." index="1"]

@@ -7,17 +7,24 @@ var is_jump_interrupted: bool
 var dead: bool = false
 var hit_delay: bool = false
 
+var AppearingEffect = preload("res://effects/AppearingEffect.tscn")
+var DisappearingEffect = preload("res://effects/DisappearingEffect.tscn")
+
 onready var animatedSprite = $AnimatedSprite
 onready var characterMover = $CharacterMover
+onready var effectTimer = $EffectTimer
+
 
 
 func _ready():
 	characterMover.set_body_to_move(self)
 	animatedSprite.set_body_to_animate(self)
 	Stats.connect("player_dead", self, "player_dead")
+	Stats.connect("character_changed", self, "change_character")
+	
 	
 
-func _physics_process(delta):
+func _physics_process(_delta):
 	if dead:
 		return
 	if Input.is_action_just_pressed("reset_scene"):
@@ -51,7 +58,43 @@ func _on_HurtBox_area_entered(area):
 		animatedSprite.player_hurt(true)
 		Stats.health = area.damage
 
+
+func change_character():
+	create_appearing_effect()
+	
+
+
+#NONE OF THIS IS WORKING RIGHT. THE CAMERA CUTS OUT WHEN THE PLAYER IS QUEUE_FREE AND THEN CUTS IN WHEN PLAYER
+#IS ADDED TO THE SCENE. FEEL LIKE THIS HAS TO BE COMPLETELY RETHOUGHT
+func add_new_character():
+	var player = Stats.character.instance()
+	player.global_position = global_position
+	queue_free()
+	get_parent().add_child(player)
+	
+	
+
+func create_appearing_effect():
+	animatedSprite.visible = false
+	effectTimer.start(0.35)
+	var effect = AppearingEffect.instance()
+	get_parent().add_child(effect)
+	effect.global_position = global_position
+	
+	
+
+func create_disappearing_effect():
+	var effect = DisappearingEffect.instance()
+	get_parent().add_child(effect)
+	effect.global_position = global_position
+	
+
+
 func player_dead():
 	dead = true
 	#print("bummer")
 	queue_free()
+
+
+func _on_EffectTimer_timeout():
+	add_new_character()

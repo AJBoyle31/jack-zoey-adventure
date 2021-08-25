@@ -42,7 +42,16 @@ func calculate_move_velocity(
 		velocity.y = 0.0
 	if body_to_move.is_on_wall() and velocity.y > 0:
 		velocity.y *= WAll_FRICTION
+	flip_player(velocity)
 	return velocity
+
+
+func flip_player(_player_movement):
+	if _player_movement.x > 0.01:
+		body_to_move.flip_player = false
+	elif _player_movement.x < -0.01:
+		body_to_move.flip_player = true
+
 
 func _ready():
 	pass 

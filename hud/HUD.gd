@@ -15,7 +15,8 @@ var fruits = [
 
 onready var score = $Scores/Score/Bananas/Number
 onready var health = $Health/Health/Label
-
+onready var pauseMenu = $PauseMenu
+onready var characterSelect = $CharacterSelect
 
 
 var t = true
@@ -23,11 +24,13 @@ var t = true
 func _ready():
 	Score.connect("score_changed", self, "update_score")
 	Stats.connect("health_changed", self, "update_health")
+	pauseMenu.connect("change_player", self, "show_characters")
 	update_health(Stats.health)
 	
 
-func _process(delta):
-	pass
+func _process(_delta):
+	if Input.is_action_just_pressed("pause_menu"):
+		pauseMenu.show()
 	# SET UP FOR TESTING
 #	yield(get_tree().create_timer(2.0), "timeout")
 #	if t:
@@ -48,3 +51,11 @@ func update_health(value):
 func update_score(value):
 	score.text = str(value)
 	
+
+func _on_Restart_pressed():
+	get_tree().reload_current_scene()
+
+
+func show_characters():
+	pauseMenu.hide()
+	characterSelect.show()

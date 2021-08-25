@@ -1,8 +1,8 @@
-[gd_scene load_steps=19 format=2]
+[gd_scene load_steps=21 format=2]
 
 [ext_resource path="res://levels/Ground.tscn" type="PackedScene" id=1]
 [ext_resource path="res://traps/Saw.tscn" type="PackedScene" id=2]
-[ext_resource path="res://player/MaskedDude.tscn" type="PackedScene" id=3]
+[ext_resource path="res://checkpoints/Finish.tscn" type="PackedScene" id=3]
 [ext_resource path="res://items/fruits/Apple.tscn" type="PackedScene" id=4]
 [ext_resource path="res://items/fruits/Banana.tscn" type="PackedScene" id=5]
 [ext_resource path="res://items/fruits/Strawberry.tscn" type="PackedScene" id=6]
@@ -17,6 +17,8 @@
 [ext_resource path="res://levels/SpikeBlock.tscn" type="PackedScene" id=15]
 [ext_resource path="res://traps/SpikeBall.tscn" type="PackedScene" id=16]
 [ext_resource path="res://traps/FallingPlatforms.tscn" type="PackedScene" id=17]
+[ext_resource path="res://checkpoints/Start.tscn" type="PackedScene" id=18]
+[ext_resource path="res://player/Test/Player.tscn" type="PackedScene" id=19]
 
 [sub_resource type="Curve2D" id=1]
 _data = {
@@ -121,13 +123,13 @@ points = 7
 
 [node name="HUD" parent="." instance=ExtResource( 11 )]
 
-[node name="MaskedDude" parent="." instance=ExtResource( 3 )]
-position = Vector2( 423, 261 )
+[node name="Start" parent="." instance=ExtResource( 18 )]
+position = Vector2( 61, 449 )
 
-[node name="AnimatedSprite" parent="MaskedDude" index="1"]
-frame = 3
+[node name="Finish" parent="." instance=ExtResource( 3 )]
+position = Vector2( 32, 81 )
+
+[node name="Player" parent="." instance=ExtResource( 19 )]
+position = Vector2( 244, 465 )
 
 [connection signal="area_entered" from="Items/Apple" to="Items/Apple" method="_on_Fruit_area_entered"]
-
-[editable path="MaskedDude"]
-[editable path="MaskedDude/HurtBox"]

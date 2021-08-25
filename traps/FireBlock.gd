@@ -16,7 +16,7 @@ onready var animationPlayer = $AnimationPlayer
 func _ready():
 	pass
 
-func _process(delta):
+func _process(_delta):
 	updateAnimation()
 
 func updateAnimation():
@@ -51,5 +51,5 @@ func _on_AnimationPlayer_animation_finished(anim_name):
 		state = animations.ON
 
 
-func _on_InitialHitBox_area_entered(area):
+func _on_InitialHitBox_area_entered(_area):
 	state = animations.HIT
