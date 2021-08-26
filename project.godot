@@ -9,11 +9,6 @@
 config_version=4
 
 _global_script_classes=[ {
-"base": "AnimatedSprite",
-"class": "CharacterAnimations",
-"language": "GDScript",
-"path": "res://player/AnimatedSprite.gd"
-}, {
 "base": "Node2D",
 "class": "CharacterMover",
 "language": "GDScript",
@@ -23,17 +18,10 @@ _global_script_classes=[ {
 "class": "Fruit",
 "language": "GDScript",
 "path": "res://items/fruits/Fruit.gd"
-}, {
-"base": "KinematicBody2D",
-"class": "Player",
-"language": "GDScript",
-"path": "res://player/Player.gd"
 } ]
 _global_script_class_icons={
-"CharacterAnimations": "",
 "CharacterMover": "",
-"Fruit": "",
-"Player": ""
+"Fruit": ""
 }
 
 [application]
