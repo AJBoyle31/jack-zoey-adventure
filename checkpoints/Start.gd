@@ -1,11 +1,13 @@
 extends AnimatedSprite
 
+var player = preload("res://player/Player.tscn")
+
 
 func _ready():
 	play("moving")
-#	var player = Stats.character.instance()
-#	player.global_position = Vector2(global_position.x + 11, global_position.y)
-#	get_parent().call_deferred("add_child", player)
+	var spawn = player.instance()
+	spawn.global_position = Vector2(global_position.x + 11, global_position.y)
+	get_parent().call_deferred("add_child", spawn)
 
 
 

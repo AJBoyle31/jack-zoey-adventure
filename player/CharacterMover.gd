@@ -2,10 +2,10 @@ extends Node2D
 
 class_name CharacterMover
 
-var GRAVITY: int = 600
-var SPEED: Vector2 = Vector2(200, 200)
-var DOUBLE_JUMP_SPEED_ADJUSTMENT = 0.5
-var WAll_FRICTION: = 0.85
+const GRAVITY: int = 600
+const SPEED: Vector2 = Vector2(200, 200)
+const DOUBLE_JUMP_SPEED_ADJUSTMENT = 0.5
+const WAll_FRICTION: = 0.85
 var move_vec: Vector2
 var _velocity: Vector2
 var body_to_move: KinematicBody2D
@@ -60,6 +60,8 @@ func _ready():
 func _physics_process(delta):
 	if body_to_move == null:
 		return
+
+	
 	if body_to_move.is_on_floor():
 		jump_one = false
 		double_jump = false
