@@ -31,3 +31,4 @@ func _on_MaskedDude_pressed():
 func change_character(_character):
 	hide()
 	Stats.character = _character
+	get_tree().set_pause(false)

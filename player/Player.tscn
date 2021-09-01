@@ -135,9 +135,11 @@ tracks/0/keys = {
 height = 6.0
 
 [node name="Player" type="KinematicBody2D"]
+visible = false
 collision_layer = 2
 collision_mask = 97
 script = ExtResource( 9 )
+health = 1
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2( 0, 4 )
@@ -151,7 +153,6 @@ texture = ExtResource( 3 )
 hframes = 6
 
 [node name="idle" type="Sprite" parent="Animations"]
-visible = false
 texture = ExtResource( 4 )
 hframes = 11
 frame = 10
@@ -161,6 +162,7 @@ visible = false
 texture = ExtResource( 5 )
 
 [node name="hit" type="Sprite" parent="Animations"]
+visible = false
 texture = ExtResource( 6 )
 hframes = 7
 
@@ -206,8 +208,13 @@ zoom = Vector2( 0.5, 0.5 )
 wait_time = 0.3
 one_shot = true
 
+[node name="SpawnTimer" type="Timer" parent="."]
+wait_time = 0.5
+one_shot = true
+
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_AnimationPlayer_animation_finished"]
 [connection signal="area_entered" from="HurtBox" to="." method="_on_HurtBox_area_entered"]
 [connection signal="timeout" from="EffectTimer" to="." method="_on_EffectTimer_timeout"]
+[connection signal="timeout" from="SpawnTimer" to="." method="_on_SpawnTimer_timeout"]
 
 [editable path="HurtBox"]
