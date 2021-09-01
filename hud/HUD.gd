@@ -17,6 +17,8 @@ onready var score = $Scores/Score/Bananas/Number
 onready var health = $Health/Health/Label
 onready var pauseMenu = $PauseMenu
 onready var characterSelect = $CharacterSelect
+onready var lives = $Health/Lives/Label
+onready var gameOver = $GameOver
 
 
 var t = true
@@ -24,8 +26,11 @@ var t = true
 func _ready():
 	Score.connect("score_changed", self, "update_score")
 	Stats.connect("health_changed", self, "update_health")
+	Stats.connect("lives_changed", self, "update_lives")
 	pauseMenu.connect("change_player", self, "show_characters")
 	update_health(Stats.health)
+	update_lives(Stats.lives)
+	gameOver.visible = false
 	
 
 func _process(_delta):
@@ -45,12 +50,19 @@ func _process(_delta):
 #	scorekeeper_children[1].text = _score
 #	score.add_child(scorekeeper)
 
-func update_health(value):
-	health.text = "Health: " + str(value)
+func update_health(_value):
+	health.text = "Health: " + str(_value)
 
-func update_score(value):
-	score.text = str(value)
+
+func update_score(_value):
+	score.text = str(_value)
 	
+func update_lives(_value):
+	if _value >= 0:
+		lives.text = "Lives Left: " + str(_value)
+	elif _value < 0:
+		gameOver.visible = true
+
 
 func _on_Restart_pressed():
 	get_tree().reload_current_scene()
@@ -59,3 +71,7 @@ func _on_Restart_pressed():
 func show_characters():
 	pauseMenu.hide()
 	characterSelect.show()
+
+
+func _on_RestartButton_pressed():
+	get_tree().reload_current_scene()

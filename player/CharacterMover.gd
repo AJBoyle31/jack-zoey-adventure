@@ -12,6 +12,7 @@ var body_to_move: KinematicBody2D
 var body_velocity: Vector2
 var jump_one: bool
 var double_jump: bool
+var spawning: bool = false
 
 func set_body_to_move(_body_to_move: KinematicBody2D):
 	body_to_move = _body_to_move
@@ -60,19 +61,20 @@ func _ready():
 func _physics_process(delta):
 	if body_to_move == null:
 		return
-
-	
-	if body_to_move.is_on_floor():
-		jump_one = false
-		double_jump = false
-	_velocity.y += GRAVITY * delta
-	var is_jump_interrupted = Input.is_action_just_released("jump") and _velocity.y < 0.0
-	if Input.is_action_just_pressed("jump"):
-		if jump_one:
-			if !double_jump:
-				double_jump = true
-	_velocity = calculate_move_velocity(_velocity, move_vec, SPEED, is_jump_interrupted, double_jump)
-	if _velocity.y > SPEED.y * 1.5:
-		_velocity.y = SPEED.y * 1.5
-	_velocity = body_to_move.move_and_slide(_velocity, Vector2.UP)
-	body_velocity = _velocity
+	elif spawning:
+		body_to_move.global_position = body_to_move.global_position.move_toward(body_to_move.start_position, delta * 250)
+	else:
+		if body_to_move.is_on_floor():
+			jump_one = false
+			double_jump = false
+		_velocity.y += GRAVITY * delta
+		var is_jump_interrupted = Input.is_action_just_released("jump") and _velocity.y < 0.0
+		if Input.is_action_just_pressed("jump"):
+			if jump_one:
+				if !double_jump:
+					double_jump = true
+		_velocity = calculate_move_velocity(_velocity, move_vec, SPEED, is_jump_interrupted, double_jump)
+		if _velocity.y > SPEED.y * 1.5:
+			_velocity.y = SPEED.y * 1.5
+		_velocity = body_to_move.move_and_slide(_velocity, Vector2.UP)
+		body_velocity = _velocity
