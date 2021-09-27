@@ -47,7 +47,9 @@ func _physics_process(_delta):
 		return
 	elif spawning:
 		if global_position == start_position:
+			global_position = start_position
 			spawning = false
+			hit_delay = false
 			characterMover.spawning = false
 			create_appearing_effect()
 			hurtBox.disabled = false
@@ -61,7 +63,7 @@ func _physics_process(_delta):
 		animationPlayer.enable_double_jump(characterMover.double_jump)
 		animationPlayer.update_animation(move_vec, characterMover.body_velocity)
 	
-	
+
 func get_direction():
 	return Vector2(Input.get_action_strength("move_right") - Input.get_action_strength("move_left"), -Input.get_action_strength("jump") if is_on_floor() or is_on_wall() and Input.is_action_just_pressed("jump") else 0.0)
 
@@ -105,7 +107,9 @@ func change_character():
 
 
 func create_appearing_effect():
-	effectTimer.start(0.6)
+	print("create_appearing: " + str(global_position))
+	print(characterMover._velocity)
+	effectTimer.start(0.3)
 	var effect = AppearingEffect.instance()
 	get_parent().add_child(effect)
 	effect.global_position = global_position
@@ -121,6 +125,7 @@ func create_disappearing_effect():
 	
 
 func _on_EffectTimer_timeout():
+	print("timeout: " + str(global_position))
 	if dead:
 		pass
 	elif spawning:
@@ -142,6 +147,7 @@ func change_character_animations(_character: int):
 	changing_character = false
 	spawning = false
 	playing = true
+	print("character_anim: " + str(global_position))
 
 
 
@@ -162,6 +168,7 @@ func _on_AnimationPlayer_animation_finished(anim_name):
 
 func player_dead():
 	spawning = true
+	hit_delay = true
 	playing = false
 	create_disappearing_effect()
 	Stats.lives = 1
@@ -176,8 +183,5 @@ func game_over():
 #ALSO NEED TO WORK UP OTHER CHECKPOINTS SPRITES AND ADD IN LOGIC FOR CHECKPOINTS i.e. EVERY CHECKPOINT HIT
 #THE LEVEL TRACKS IT AND THEN THE PLAYER RESTARTS AT THAT CHECKPOINT 
 
-#SWAPPED LOGIC AROUND SO THAT THE PLAYER ISN'T SPAWNED BY THE LEVEL. THE PLAYER IS ALREADY ON THE LEVEL, JUST HIDDEN
-#RUNNING INTO AN ISSUE WHERE THE PLAYER IS LOSING LIVES ON THE WAY BACK TO RESPAWN
-#THE SPAWNING AND EFFECT LOGIC IS BECOMING SPAGHETTI LIKE
 
 

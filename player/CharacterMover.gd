@@ -63,6 +63,9 @@ func _physics_process(delta):
 		return
 	elif spawning:
 		body_to_move.global_position = body_to_move.global_position.move_toward(body_to_move.start_position, delta * 250)
+		move_vec = Vector2.ZERO
+		_velocity = body_to_move.move_and_slide(Vector2.ZERO, Vector2.UP)
+		
 	else:
 		if body_to_move.is_on_floor():
 			jump_one = false

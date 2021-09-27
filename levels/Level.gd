@@ -19,6 +19,7 @@ func _ready():
 	Stats.connect("game_over", self, "game_over")
 	player.start_position = Vector2(start.global_position.x + 11, start.global_position.y + 5)
 	player.global_position = Vector2(start.global_position.x + 11, start.global_position.y + 5)
+	print("start position: " + str(Vector2(start.global_position.x + 11, start.global_position.y + 5)))
 	
 	
 
@@ -31,16 +32,11 @@ func _process(_delta):
 
 func spawn_player():
 	pass
-#	var spawn = player.instance()
-#	spawn.global_position = Vector2(start.global_position.x + 11, start.global_position.y + 5)
-#	get_parent().call_deferred("add_child", spawn)
-#	levelCamera.current = false
+
 
 func player_dead():
 	pass
-#	levelCamera.make_current()
-#	levelCamera.position = start.global_position
-#	spawnDelayTimer.start(0.3)
+
 	
 
 func game_over():
