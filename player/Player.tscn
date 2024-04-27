@@ -155,7 +155,6 @@ hframes = 6
 [node name="idle" type="Sprite" parent="Animations"]
 texture = ExtResource( 4 )
 hframes = 11
-frame = 10
 
 [node name="fall" type="Sprite" parent="Animations"]
 visible = false

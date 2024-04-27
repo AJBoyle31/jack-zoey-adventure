@@ -1,0 +1,16 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://area detection/HitBox.tscn" type="PackedScene" id=1]
+[ext_resource path="res://area detection/HurtBox.tscn" type="PackedScene" id=2]
+[ext_resource path="res://npc/NPC.gd" type="Script" id=4]
+
+[node name="NPC" type="KinematicBody2D"]
+script = ExtResource( 4 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+
+[node name="NPCAnimations" type="Node2D" parent="."]
+
+[node name="NPCHurtBox" parent="." instance=ExtResource( 2 )]
+
+[node name="NPCHitBox" parent="." instance=ExtResource( 1 )]
