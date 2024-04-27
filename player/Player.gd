@@ -107,8 +107,6 @@ func change_character():
 
 
 func create_appearing_effect():
-	print("create_appearing: " + str(global_position))
-	print(characterMover._velocity)
 	effectTimer.start(0.3)
 	var effect = AppearingEffect.instance()
 	get_parent().add_child(effect)
@@ -125,7 +123,6 @@ func create_disappearing_effect():
 	
 
 func _on_EffectTimer_timeout():
-	print("timeout: " + str(global_position))
 	if dead:
 		pass
 	elif spawning:

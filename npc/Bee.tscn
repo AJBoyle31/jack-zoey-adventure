@@ -1,0 +1,127 @@
+[gd_scene load_steps=12 format=2]
+
+[ext_resource path="res://assets/Bad Guys/Bee/Hit (36x34).png" type="Texture" id=1]
+[ext_resource path="res://assets/Bad Guys/Bee/Idle (36x34).png" type="Texture" id=2]
+[ext_resource path="res://assets/Bad Guys/Bee/Attack (36x34).png" type="Texture" id=3]
+[ext_resource path="res://npc/NPC.tscn" type="PackedScene" id=4]
+[ext_resource path="res://area detection/DetectionBox.tscn" type="PackedScene" id=6]
+[ext_resource path="res://npc/Bee.gd" type="Script" id=7]
+
+[sub_resource type="CapsuleShape2D" id=1]
+height = 6.0
+
+[sub_resource type="RectangleShape2D" id=6]
+extents = Vector2( 10, 19.5 )
+
+[sub_resource type="Animation" id=7]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("NPCAnimations/idle:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 0 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("NPCAnimations/attack:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 0 ]
+}
+
+[sub_resource type="Animation" id=8]
+resource_name = "attack"
+tracks/0/type = "value"
+tracks/0/path = NodePath("NPCAnimations/attack:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 0, 1, 2, 3, 4, 5, 6, 7 ]
+}
+tracks/1/type = "method"
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0.5 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "shoot_bee_bullet"
+} ]
+}
+
+[sub_resource type="Animation" id=9]
+resource_name = "idle"
+length = 0.6
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("NPCAnimations/idle:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 0, 1, 2, 3, 4, 5 ]
+}
+
+[node name="Bee" instance=ExtResource( 4 )]
+collision_layer = 128
+script = ExtResource( 7 )
+
+[node name="CollisionShape2D" parent="." index="0"]
+shape = SubResource( 1 )
+
+[node name="idle" type="Sprite" parent="NPCAnimations" index="0"]
+texture = ExtResource( 2 )
+hframes = 6
+
+[node name="hit" type="Sprite" parent="NPCAnimations" index="1"]
+visible = false
+texture = ExtResource( 1 )
+hframes = 5
+
+[node name="attack" type="Sprite" parent="NPCAnimations" index="2"]
+visible = false
+texture = ExtResource( 3 )
+hframes = 8
+
+[node name="DetectionBox" parent="." index="4" instance=ExtResource( 6 )]
+collision_layer = 256
+collision_mask = 2
+
+[node name="CollisionShape2D" parent="DetectionBox" index="0"]
+position = Vector2( 0, 41.5 )
+shape = SubResource( 6 )
+
+[node name="BeeAnimationPlayer" type="AnimationPlayer" parent="." index="5"]
+anims/RESET = SubResource( 7 )
+anims/attack = SubResource( 8 )
+anims/idle = SubResource( 9 )
+
+[connection signal="body_entered" from="DetectionBox" to="." method="_on_DetectionBox_body_entered"]
+[connection signal="animation_changed" from="BeeAnimationPlayer" to="." method="_on_BeeAnimationPlayer_animation_changed"]
+[connection signal="animation_finished" from="BeeAnimationPlayer" to="." method="_on_BeeAnimationPlayer_animation_finished"]
+
+[editable path="DetectionBox"]
